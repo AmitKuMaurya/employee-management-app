@@ -93,7 +93,7 @@ export const employeeReducer = (state = { employees: [] }, action) => {
         return {
           ...state,
           loading: false,
-          isUpdated: action.payload.success,
+          isItUpdated: action.payload,
         };
 
       case Types.DELETE_EMPLOYEE_FAIL:
@@ -113,7 +113,7 @@ export const employeeReducer = (state = { employees: [] }, action) => {
       case Types.UPDATE_EMPLOYEE_RESET:
         return {
           ...state,
-          isUpdated: false,
+          isItUpdated: false,
         };
   
       default:

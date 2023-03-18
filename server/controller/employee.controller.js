@@ -1,8 +1,8 @@
+require("dotenv").config();
 const { EmployeeModel } = require("../models/employee.model");
 const cloudinary = require("cloudinary");
 const asyncAwaitErr = require("../middlewares/async.await");
 const ErrorHandler = require("../middlewares/ErrorHandlers");
-require("dotenv").config();
 
 
 const getEmployees = async (req, res) => {
@@ -20,7 +20,7 @@ const getEmployees = async (req, res) => {
 const createEmployees = asyncAwaitErr(async (req, res) => {
   
   const { username,email,phone,status,gender} = req.body;
-  
+
   const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
     folder: "avatars",
     width: 150,
@@ -50,36 +50,54 @@ const createEmployees = asyncAwaitErr(async (req, res) => {
     // }
 });
 
-const updateEmployee = async (req, res, next) => {
-  // const {id} = req.params
-  const newUserData = {
+const updateEmployee = asyncAwaitErr(async (req, res, next) => {
+  // const _id = req.params.id;
+    const newEmployData = {
     name: req.body.username,
     email: req.body.email,
     phone: req.body.phone,
     status: req.body.status,
-    avatar: req.body.avatar,
     gender: req.body.gender,
   };
+
+  if (req.body.avatar !== "") {
+    const employee = await EmployeeModel.findById(req.params.id);
+
+    const imageId = employee.avatar.public_id;
+
+    await cloudinary.v2.uploader.destroy(imageId);
+
+    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    });
+
+    newEmployData.avatar = {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    };
+  }
+
   let employee = EmployeeModel.findById(req.params.id);
 
   if (!employee) {
     return next(`employee does not exist with id : ${req.params.id}`);
   }
 
-  employee = await EmployeeModel.findByIdAndUpdate(req.params.id, newUserData, {
+  employee = await EmployeeModel.findByIdAndUpdate(req.params.id, newEmployData, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
   });
   try {
     res.status(200).json({
-      success: true,
-      employee,
+      success: true
     });
   } catch (error) {
     console.log(error);
   }
-};
+});
 
 
 const deleteEmployee = asyncAwaitErr(async (req, res, next) => {

@@ -1,234 +1,206 @@
-// import React, { Fragment, useEffect, useState } from "react";
-// import { useSelector, useDispatch } from "react-redux";
-// import {
-//     updateEmployee,getEmployeeDetails
-// } from "../redux/employee/employee.action";
-// import { Button } from "@material-ui/core";
-// import AccountTreeIcon from "@material-ui/icons/AccountTree";
-// import DescriptionIcon from "@material-ui/icons/Description";
-// import StorageIcon from "@material-ui/icons/Storage";
-// import SpellcheckIcon from "@material-ui/icons/Spellcheck";
-// import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
-// import * as Types from "../redux/employee/employee.action.types";
-// import { useNavigate, useParams } from "react-router-dom";
-// import "../styles/AddEmployee.css"
+import React, { Fragment, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+    updateEmployee, getEmployeeDetails
+} from "../redux/employee/employee.action";
+import { Button } from "@material-ui/core";
+import AccountTreeIcon from "@material-ui/icons/AccountTree";
+import DescriptionIcon from "@material-ui/icons/Description";
+import StorageIcon from "@material-ui/icons/Storage";
+import SpellcheckIcon from "@material-ui/icons/Spellcheck";
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+import * as Types from "../redux/employee/employee.action.types";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import "../styles/AddEmployee.css"
+import FilterEmployee from "../components/FilterEmployee";
 
-// const EditEmployee = () => {
-//     const dispatch = useDispatch();
-//     const navigate = useNavigate();
-//     const {id} = useParams();
-//     console.log(id);
-//     const { error, employee } = useSelector((state) => state.employeeDetails);
-//     console.log(employee);
-//     const {
-//         loading,
-//         error: updateError,
-//         isUpdated,
-//     } = useSelector((state) => state.updateAndDeleteEmployee);
+const EditEmployee = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { id } = useParams();
 
-//     const [username, setUserName] = useState("");
-//     const [phone, setPrice] = useState("");
-//     const [email, setEmail] = useState("");
-//     const [avatar, setAvatar] = useState("");
-//     const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
-//     const [images, setImages] = useState([]);
-//     const [oldImages, setOldImages] = useState([]);
-//     const [imagesPreview, setImagesPreview] = useState([]);
+    const { error, employee } = useSelector((state) => state.employeeDetails);
+    console.log('employee ', employee);
+    const {
+        loading,
+        error: updateError,
+        isItUpdated,
+    } = useSelector((state) => state.updateAndDeleteEmployee);
 
-//     const categories = [
-//         "Laptop",
-//         "grocery",
-//         "cloths",
-//         "Tops",
-//         "Camera",
-//         "SmartPhones",
-//         "Suit",
-//         "Book",
-//         "Electronics",
-//         "Shoes",
-//         "Furniture",
-//         "Music",
-//     ];
+    console.log('updateError :', updateError);
+    console.log('isItUpdated :', isItUpdated);
 
+    const [username, setUserName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [email, setEmail] = useState("");
+    const [status, setStatus] = useState("");
+    const [gender, setGender] = useState("");
+    const [avatar, setAvatar] = useState("");
+    const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
 
-//     useEffect(() => {
-//         if (employee && employee._id !== id) {
-//             dispatch(getEmployeeDetails(id));
-//         } else {
-//             setName(employee.username);
-//             setDescription(employee.email);
-//             setPrice(employee.status);
-//             setCategory(employee.gender);
-//             setStock(employee.phone);
-//             setOldImages(employee.avatar);
-//         }
-//         if (error) {
-//             alert(error);
-//         }
+    const ChooseGender = [
+        "male",
+        "female",
+        "other",
+    ];
+    const ChooseStatus = [
+        "active",
+        "inactive"
+    ];
 
-//         if (updateError) {
-//             alert(updateError);
-//         }
+    const updateProductSubmitHandler = (e) => {
+        e.preventDefault();
 
-//         if (isUpdated) {
-//             alert("Product Updated Successfully");
-//             // navigate("/admin/products");
-//             dispatch({ type: Types.UPDATE_EMPLOYEE_RESET });
-//         }
-//     }, [
-//         dispatch,
-//         error,
-//         isUpdated,
-//         id,
-//         employee,
-//         updateError,
-//         navigate
-//     ]);
+        const myForm = new FormData();
 
-//     const updateProductSubmitHandler = (e) => {
-//         e.preventDefault();
+        myForm.set("username", username);
+        myForm.set("phone", phone);
+        myForm.set("email", email);
+        myForm.set("gender", gender);
+        myForm.set("status", status);
+        myForm.set("avatar", avatar);
+        dispatch(updateEmployee(id, myForm));
+    };
 
-//         const myForm = new FormData();
+    const updateEmployeeImagesChange = (e) => {
+        const reader = new FileReader();
 
-//         myForm.set("name", name);
-//         myForm.set("price", price);
-//         myForm.set("description", description);
-//         myForm.set("category", category);
-//         myForm.set("stock", stock);
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+                setAvatarPreview(reader.result);
+                setAvatar(reader.result);
+            }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    };
 
-//         images.forEach((image) => {
-//             myForm.append("images", image);
-//         });
-//         dispatch(updateEmployee(id,myForm));
-//     };
+    useEffect(() => {
+        if (employee && employee._id !== id) {
+            dispatch(getEmployeeDetails(id));
+        } else {
+            setUserName(employee.username);
+            setPhone(employee.phone);
+            setEmail(employee.email);
+            setGender(employee.gender);
+            setStatus(employee.status);
+            setAvatarPreview(employee.avatar.url);
+        }
+        if (error) {
+            alert(error);
+        }
 
-//     const updateProductImagesChange = (e) => {
-//         const files = Array.from(e.target.files);
+        if (updateError) {
+            alert(updateError);
+        }
 
-//         setImages([]);
-//         setImagesPreview([]);
-//         setOldImages([]);
+        if (isItUpdated) {
+            alert("Employee Updated Successfully.");
+            navigate("/");
+            dispatch({ type: Types.UPDATE_EMPLOYEE_RESET });
+        }
+    }, [dispatch, error, isItUpdated, id, employee, updateError, navigate]);
 
-//         files.forEach((file) => {
-//             const reader = new FileReader();
+    return (
+        <>
+            <div className="dashboard">
+                <div id='header'>
+                    <Link to={"/"}><button className='add-employee'>Employee Table</button></Link>
+                    <FilterEmployee />
+                </div>
+                <div className="newProductContainer">
+                    <form
+                        className="createProductForm"
+                        encType="multipart/form-data"
+                        onSubmit={updateProductSubmitHandler}
+                    >
+                        <h1>Update Employee</h1>
 
-//             reader.onload = () => {
-//                 if (reader.readyState === 2) {
-//                     setImagesPreview((old) => [...old, reader.result]);
-//                     setImages((old) => [...old, reader.result]);
-//                 }
-//             };
+                        <div>
+                            <SpellcheckIcon />
+                            <input
+                                type="text"
+                                placeholder="UserName"
+                                required
+                                value={username}
+                                onChange={(e) => setUserName(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <AttachMoneyIcon />
+                            <input
+                                type="tel"
+                                placeholder="Phone"
+                                required
+                                maxLength={"10"}
+                                onChange={(e) => setPhone(e.target.value)}
+                                value={phone}
+                            />
+                        </div>
 
-//             reader.readAsDataURL(file);
-//         });
-//     };
+                        <div>
+                            <DescriptionIcon />
 
-//     return (
-//         <Fragment>
+                            < input
+                                type={"email"}
+                                placeholder="Email"
+                                value={email}
+                                required
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
 
-//             <div className="dashboard">
-//                 <div className="newProductContainer">
-//                     <form
-//                         className="createProductForm"
-//                         encType="multipart/form-data"
-//                         onSubmit={updateProductSubmitHandler}
-//                     >
-//                         <h1>Update Employee</h1>
+                        <div>
+                            <AccountTreeIcon />
+                            <select
+                                value={gender}
+                                onChange={(e) => setGender(e.target.value)}
+                            >
+                                <option value="">Choose Category</option>
+                                {ChooseGender.map((gend) => (
+                                    <option key={gend} value={gend}>
+                                        {gend}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
 
-//                         <div>
-//                             <SpellcheckIcon />
-//                             <input
-//                                 type="text"
-//                                 placeholder="UserName"
-//                                 required
-//                                 value={username}
-//                                 onChange={(e) => setUserName(e.target.value)}
-//                             />
-//                         </div>
-//                         <div>
-//                             <AttachMoneyIcon />
-//                             <input
-//                                 type="number"
-//                                 placeholder="Price"
-//                                 required
-//                                 onChange={(e) => setPrice(e.target.value)}
-//                                 value={price}
-//                             />
-//                         </div>
+                        <div>
+                            <StorageIcon />
+                            <select
+                                value={status}
+                                onChange={(e) => setStatus(e.target.value)}
+                            >
+                                <option value="">Choose Status</option>
+                                {ChooseStatus.map((stat) => (
+                                    <option key={stat} value={stat}>
+                                        {stat}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
 
-//                         <div>
-//                             <DescriptionIcon />
+                        <div id="updateProfileImage">
+                            <img src={avatarPreview} alt="Avatar Preview" />
+                            <input
+                                type="file"
+                                name="avatar"
+                                accept="image/*"
+                                onChange={updateEmployeeImagesChange}
+                            />
+                        </div>
 
-//                             <textarea
-//                                 placeholder="Product Description"
-//                                 value={description}
-//                                 onChange={(e) => setDescription(e.target.value)}
-//                                 cols="30"
-//                                 rows="1"
-//                             ></textarea>
-//                         </div>
+                        <Button
+                            id="createProductBtn"
+                            type="submit"
+                            disabled={loading ? true : false}
+                        >
+                            Create
+                        </Button>
+                    </form>
+                </div>
+            </div>
+        </>
+    );
+};
 
-//                         <div>
-//                             <AccountTreeIcon />
-//                             <select
-//                                 value={category}
-//                                 onChange={(e) => setCategory(e.target.value)}
-//                             >
-//                                 <option value="">Choose Category</option>
-//                                 {categories.map((cate) => (
-//                                     <option key={cate} value={cate}>
-//                                         {cate}
-//                                     </option>
-//                                 ))}
-//                             </select>
-//                         </div>
-
-//                         <div>
-//                             <StorageIcon />
-//                             <input
-//                                 type="number"
-//                                 placeholder="Stock"
-//                                 required
-//                                 onChange={(e) => setStock(e.target.value)}
-//                                 value={stock}
-//                             />
-//                         </div>
-
-//                         <div id="createProductFormFile">
-//                             <input
-//                                 type="file"
-//                                 name="avatar"
-//                                 accept="image/*"
-//                                 onChange={updateProductImagesChange}
-//                                 multiple
-//                             />
-//                         </div>
-
-//                         <div id="createProductFormImage">
-//                             {/* {oldImages &&
-//                                 oldImages.map((image, index) => (
-//                                     <img key={index} src={image.url} alt="Old Product Preview" />
-//                                 ))} */}
-//                         </div>
-
-//                         <div id="createProductFormImage">
-//                             {imagesPreview.map((image, index) => (
-//                                 <img key={index} src={image} alt="Product Preview" />
-//                             ))}
-//                         </div>
-
-//                         <Button
-//                             id="createProductBtn"
-//                             type="submit"
-//                             disabled={loading ? true : false}
-//                         >
-//                             Create
-//                         </Button>
-//                     </form>
-//                 </div>
-//             </div>
-//         </Fragment>
-//     );
-// };
-
-// export default EditEmployee;
+export default EditEmployee;

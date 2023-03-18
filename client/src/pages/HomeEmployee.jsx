@@ -8,7 +8,8 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import * as Types from "../redux/employee/employee.action.types";
 import "../styles/HomeEmployee.css";
-import AdderSection from "../components/AdderSection";
+
+import FilterEmployee from "../components/FilterEmployee";
 
 const HomeEmployee = () => {
     const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const HomeEmployee = () => {
             alert(error);
         }
         if (deleteError) {
-          alert(deleteError);
+            alert(deleteError);
         }
 
         if (isItDeleted) {
@@ -43,9 +44,9 @@ const HomeEmployee = () => {
         dispatch(getEmployee());
 
     }, [dispatch, error, navigate, deleteError, isItDeleted]);
-    
-    
-    
+
+    // #a3a7e4
+
     const columns = [
         {
             field: "id",
@@ -86,6 +87,11 @@ const HomeEmployee = () => {
             type: "string",
             minWidth: 100,
             flex: 0.2,
+            cellClassName: (params) => {
+                return params.getValue(params.id, "status") === "active"
+                    ? "greenColor"
+                    : "redColor";
+            },
         },
         {
             field: "gender",
@@ -137,17 +143,18 @@ const HomeEmployee = () => {
     return (
         <Fragment>
 
-                <AdderSection/>
-            <div className="dashboard">
-                {/* <SideBarComp /> */}
-                <div className="employee_table">
-                    {/* <h1 id="productListHeading">ALL PRODUCTS</h1> */}
+            <div id='header'>
+                <Link to={"/create/employee"}><button className='add-employee'>Add Employee</button></Link>
+                <FilterEmployee />
+            </div>
+            <div >
+                <div className="employee_table" >
                     <DataGrid
                         rows={rows}
                         columns={columns}
                         pageSize={10}
                         disableSelectionOnClick
-                        className="productListTable"
+                        className="EmployeeListTable"
                         autoHeight
                     />
                 </div>

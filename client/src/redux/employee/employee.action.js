@@ -105,7 +105,7 @@ export const deleteEmployee = (id) => async (dispatch) => {
   }
 };
 
-export const updateEmployee = (id, productData) => async (dispatch) => {
+export const updateEmployee = (id, Data) => async (dispatch) => {
   try {
     dispatch({ type: Types.UPDATE_EMPLOYEE_REQUEST });
 
@@ -116,15 +116,16 @@ export const updateEmployee = (id, productData) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `http://localhost:8080/api/update/employee${id}`,
-      productData,
+      `http://localhost:8080/api/update/employee/${id}`,
+      Data,
       config
     );
 
     dispatch({
       type: Types.UPDATE_EMPLOYEE_SUCCESS,
-      payload: data,
+      payload: data.success,
     });
+    console.log(data);
   } catch (error) {
     dispatch({
       type: Types.UPDATE_EMPLOYEE_FAIL,

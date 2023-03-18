@@ -7,21 +7,20 @@ import StorageIcon from "@material-ui/icons/Storage";
 import SpellcheckIcon from "@material-ui/icons/Spellcheck";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import * as Types from "../redux/employee/employee.action.types";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import "../styles/AddEmployee.css";
+import FilterEmployee from "../components/FilterEmployee";
 
 const AddEmployee = () => {
   const dispatch = useDispatch();
 
-  const { loading,employee,error, success } = useSelector((state) => state.addEmployee);
+  const { loading,error, success } = useSelector((state) => state.addEmployee);
 
   const [user, setUser] = useState({
     username : "",
     email : "",
-    phone : "",
-    gender : "",
-    status : ""
+    phone : ""
   });
 
 
@@ -93,10 +92,15 @@ const AddEmployee = () => {
 
 
   return (
-    <Fragment>
+    <>
 
       <div className="dashboard">
-  
+      
+      <div id='header'>
+      <Link to={"/"}><button className='add-employee'>Employee Table</button></Link>
+      <FilterEmployee />
+    </div>
+      
         <div className="newProductContainer">
           <form
             className="createProductForm"
@@ -185,7 +189,7 @@ const AddEmployee = () => {
           </form>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };
 

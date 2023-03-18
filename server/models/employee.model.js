@@ -7,11 +7,11 @@ const employeeSchema = new mongoose.Schema({
   avatar: {
     public_id: {
       type: String,
-      required: true,
+      required: [true, "There will be your public Id"],
     },
     url: {
       type: String,
-      required: true,
+      required: [true, "There will be your image url."],
     },
   },
   status: { type: String, required: [true, "Please choose your status"] },

@@ -4,3 +4,89 @@
     height: auto;
     margin: auto;
 }
+
+#header{
+display: flex;
+align-items: center;
+justify-content: space-between;
+height: 40px;
+width: 88%;
+margin: auto;
+margin-bottom: 2rem;
+}
+
+.add-employee {
+    padding: 1rem 3rem; 
+     border: 3px solid #a3a7e4;
+     background-color: white;
+     border-radius: 0.3rem;
+     cursor: pointer;
+}
+
+/* .employee_table{
+
+}
+
+
+
+.EmployeeListTable{
+
+} */
+
+
+.EmployeeListTable {
+    background-color: white;
+  }
+  
+  .EmployeeListTable div {
+    /* font: 300 1vmax "Roboto"; */
+    color: rgba(0, 0, 0, 0.678);
+    border: none;
+  }
+  
+  .EmployeeListTable a {
+    color: rgba(0, 0, 0, 0.527);
+    transition: all 0.5s;
+  }
+  
+  .EmployeeListTable a:hover {
+    color: #a3a7e4;
+  }
+  
+  .MuiDataGrid-columnHeader {
+    background-color: #a3a7e4;
+    padding: 1vmax !important;
+  }
+  
+  .MuiDataGrid-columnHeader div {
+    color: rgb(255, 255, 255);
+    font: 500 1.1vmax "Roboto" !important;
+  }
+  
+  .MuiDataGrid-iconSeparator {
+    display: none !important;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .myOrdersPage {
+      padding: 0;
+      height: 93vh;
+    }
+  
+    #myOrdersHeading {
+      font: 400 2.2vmax "Roboto";
+      padding: 4vw;
+    }
+  
+    .EmployeeListTable div {
+      font: 300 4vw "Roboto";
+    }
+  
+    .MuiDataGrid-columnHeader {
+      padding: 20px !important;
+    }
+  
+    .MuiDataGrid-columnHeader div {
+      font: 500 5vw "Roboto" !important;
+    }
+  }
