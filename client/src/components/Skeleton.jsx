@@ -1,12 +1,13 @@
+
 import React from 'react'
-import "../styles/LoadingSkeleton.css"
+import "../styles/Skeleton.css"
 const Skeleton = () => {
   return (
-    <div className="loading-skeleton">
+    <div className='loading-skeleton'>
       <div></div>
     </div>
   )
 }
 
-export default Skeleton;
+export default Skeleton
 

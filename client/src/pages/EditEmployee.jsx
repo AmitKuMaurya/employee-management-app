@@ -13,6 +13,7 @@ import * as Types from "../redux/employee/employee.action.types";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "../styles/AddEmployee.css"
 import FilterEmployee from "../components/FilterEmployee";
+import Skeleton from "../components/Skeleton";
 
 const EditEmployee = () => {
     const dispatch = useDispatch();
@@ -102,6 +103,8 @@ const EditEmployee = () => {
 
     return (
         <>
+        {
+            loading ? (<Skeleton/>) : (<>
 
                 <div id='header'>
                     <Link to={"/"}><button className='add-employee'>Employee Table</button></Link>
@@ -118,17 +121,17 @@ const EditEmployee = () => {
                         <div>
                             <SpellcheckIcon />
                             <input
-                                type="text"
+                                type={"text"}
                                 placeholder="UserName"
                                 required
-                                value={username}
                                 onChange={(e) => setUserName(e.target.value)}
+                                value={username}
                             />
                         </div>
                         <div>
                             <AttachMoneyIcon />
                             <input
-                                type="tel"
+                                type={"tel"}
                                 placeholder="Phone"
                                 required
                                 maxLength={"10"}
@@ -198,6 +201,8 @@ const EditEmployee = () => {
                         </Button>
                     </form>
                 </div>
+        </>)
+        }
         </>
     );
 };

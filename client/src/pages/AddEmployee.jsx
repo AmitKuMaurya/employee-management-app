@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import "../styles/AddEmployee.css";
 import FilterEmployee from "../components/FilterEmployee";
+import Skeleton from "../components/Skeleton";
 
 const AddEmployee = () => {
   const dispatch = useDispatch();
@@ -92,7 +93,9 @@ const AddEmployee = () => {
 
 
   return (
-    <>
+   <>
+   {
+    loading ? (<Skeleton/>) : ( <>
       
       <div id='header'>
       <Link to={"/"}><button className='add-employee'>Employee Table</button></Link>
@@ -186,7 +189,9 @@ const AddEmployee = () => {
             </Button>
           </form>
         </div>
-    </>
+    </>)
+   }
+   </>
   );
 };
 

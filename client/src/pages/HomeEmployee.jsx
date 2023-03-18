@@ -10,6 +10,7 @@ import * as Types from "../redux/employee/employee.action.types";
 import "../styles/HomeEmployee.css";
 
 import FilterEmployee from "../components/FilterEmployee";
+import Skeleton from "../components/Skeleton";
 
 const HomeEmployee = () => {
     const dispatch = useDispatch();
@@ -141,25 +142,29 @@ const HomeEmployee = () => {
         });
 
     return (
-        <Fragment>
-
-            <div id='header'>
-                <Link to={"/create/employee"}><button className='add-employee'>Add Employee</button></Link>
-                <FilterEmployee />
-            </div>
-            <div >
-                <div className="employee_table" >
-                    <DataGrid
-                        rows={rows}
-                        columns={columns}
-                        pageSize={10}
-                        disableSelectionOnClick
-                        className="EmployeeListTable"
-                        autoHeight
-                    />
+        <>
+        {
+            loading ? (<Skeleton/>) : (<>
+        
+                <div id='header'>
+                    <Link to={"/create/employee"}><button className='add-employee'>Add Employee</button></Link>
+                    <FilterEmployee />
                 </div>
-            </div>
-        </Fragment>
+                <div >
+                    <div className="employee_table" >
+                        <DataGrid
+                            rows={rows}
+                            columns={columns}
+                            pageSize={10}
+                            disableSelectionOnClick
+                            className="EmployeeListTable"
+                            autoHeight
+                        />
+                    </div>
+                </div>
+            </>)
+        }
+        </>
     );
 };
 

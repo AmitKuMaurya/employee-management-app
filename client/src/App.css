@@ -1,7 +1,9 @@
 
 
 
-.App-header > h3{
-    margin-bottom: 3rem;
+.App > h2{
+    /* margin-bottom: 3rem; */
     text-align: center;
+    padding-bottom: 1rem;
+    width: 35%;
 }

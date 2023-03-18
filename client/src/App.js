@@ -4,11 +4,8 @@ import AllRoutes from "./Routes/AllRoutes";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h3>Employee Management Application.</h3>
-        
+        <h2>Employee Management Application.</h2>
         <AllRoutes />
-      </header>
     </div>
   );
 }
