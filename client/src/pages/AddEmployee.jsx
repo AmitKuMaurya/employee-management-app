@@ -93,17 +93,15 @@ const AddEmployee = () => {
 
   return (
     <>
-
-      <div className="dashboard">
       
       <div id='header'>
       <Link to={"/"}><button className='add-employee'>Employee Table</button></Link>
       <FilterEmployee />
     </div>
       
-        <div className="newProductContainer">
+        <div className="newEmployeeContainer">
           <form
-            className="createProductForm"
+            className="createEmployeeForm"
             encType = "multipart/form-data"
             onSubmit={createEmployeeSubmitHandler}
           >
@@ -180,7 +178,7 @@ const AddEmployee = () => {
             </div>
 
             <Button
-              id="createProductBtn"
+              id="createEmployeeBtn"
               type="submit"
               disabled={loading ? true : false} 
             >
@@ -188,7 +186,6 @@ const AddEmployee = () => {
             </Button>
           </form>
         </div>
-      </div>
     </>
   );
 };
