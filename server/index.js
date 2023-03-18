@@ -6,7 +6,7 @@ const fileUploader = require("express-fileupload");
 const {connection} = require("./config/database");
 const {employeeRouter} = require("./routes/emoloyee.route");
 const app = express();
-const PORT = 8080;
+
 
 cloudinary.config({
     cloud_name : process.env.CLOUDINARY_NAME,
@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
 app.use("/api/",employeeRouter);
 
 
-app.listen(PORT, async () => {
+app.listen(process.env.PORT, async () => {
     try{
         await connection;
         console.log({"msg":"DataBase Connected to MonngoDB."})
@@ -34,5 +34,5 @@ app.listen(PORT, async () => {
         console.log({error : "Error while, connnecting to DB."})
         console.log(err);
     }
-    console.log(`listening on PORT ${PORT}`);
+    console.log(`listening on PORT ${process.env.PORT}`);
 })

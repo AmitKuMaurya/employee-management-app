@@ -49,24 +49,25 @@ const HomeEmployee = () => {
     // #a3a7e4
 
     const columns = [
-        {
-            field: "id",
-            headerName: "Product ID",
-            minWidth: 200,
-            flex: 0.4
-        },
         // {
-        //     field: "avatar",
-        //     headerName: "Avatar",
-        //     minWidth: 150,
-        //     flex: 0.2,
-        //     // renderCell: (params) => <img src={params.getValue(params.avatar)} />
+        //     field: "id",
+        //     headerName: "Product ID",
+        //     minWidth: 200,
+        //     flex: 0.4
         // },
+        {
+            field: "avatar",
+            headerName: "Avatar",
+            minWidth: 150,
+            flex: 0.2,
+            borderRadius : 50,
+            renderCell: (params) => <img src={params.value} />
+        },
         {
             field: "username",
             headerName: "UserName",
             minWidth: 100,
-            flex: 0.4,
+            flex: 0.3,
         },
         {
             field: "email",
@@ -78,7 +79,7 @@ const HomeEmployee = () => {
         {
             field: "phone",
             headerName: "Phone",
-            type: "number",
+            // type: "number",
             minWidth: 100,
             flex: 0.2,
         },
@@ -132,7 +133,7 @@ const HomeEmployee = () => {
         employees.forEach((item) => {
             rows.push({
                 id: item._id,
-                // avatar: item.avatar,
+                avatar: item.avatar.url,
                 username: item.username,
                 email: item.email,
                 phone: item.phone,

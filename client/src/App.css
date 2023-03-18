@@ -1,9 +1,10 @@
-
-
-
 .App > h2{
-    /* margin-bottom: 3rem; */
+    border-bottom: 1px solid #eae7f8;
+    color: #a3a7e4;
+    font-family: Roboto;
+    font-size: 1.4vmax;
+    margin: 1vmax auto;
+    padding: 1vmax;
     text-align: center;
-    padding-bottom: 1rem;
-    width: 35%;
+    width: 30vmax;
 }
