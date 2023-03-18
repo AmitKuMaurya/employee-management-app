@@ -1,10 +1,10 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
-const cloudinary = require("cloudinary")
+const cloudinary = require("cloudinary");
 const fileUploader = require("express-fileupload");
 const {connection} = require("./config/database");
-const {employeeRouter} = require("./routes/emoloyee.route")
+const {employeeRouter} = require("./routes/emoloyee.route");
 const app = express();
 const PORT = 8080;
 
