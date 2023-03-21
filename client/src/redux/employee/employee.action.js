@@ -12,7 +12,7 @@ export const getEmployee = () => async (dispatch) => {
     };
 
     const { data } = await axios.get(
-      `http://localhost:8080/api/employee`,
+      `https://employee-management-api-o905.onrender.com/api/employee`,
       config
     );
 
@@ -34,7 +34,7 @@ export const getEmployeeDetails = (id) => async (dispatch) => {
     dispatch({ type: Types.GET_EMPLOYEE_DETAILED_LOADING });
 
     const { data } = await axios.get(
-      `http://localhost:8080/api/employee/${id}`
+      `https://employee-management-api-o905.onrender.com/api/employee/${id}`
     );
 
     dispatch({
@@ -61,7 +61,7 @@ export const createNewEmployee = (Data) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(`http://localhost:8080/api/create/employee`, Data, config);
+    const { data } = await axios.post(`https://employee-management-api-o905.onrender.com/api/create/employee`, Data, config);
 
     dispatch({
       type: Types.NEW_EMPLOYEE_SUCCESS,
@@ -87,7 +87,7 @@ export const deleteEmployee = (id) => async (dispatch) => {
     };
 
     const { data } = await axios.delete(
-      `http://localhost:8080/api/delete/employee/${id}`,
+      `https://employee-management-api-o905.onrender.com/api/delete/employee/${id}`,
       config
     );
 
@@ -116,7 +116,7 @@ export const updateEmployee = (id, Data) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `http://localhost:8080/api/update/employee/${id}`,
+      `https://employee-management-api-o905.onrender.com/update/employee/${id}`,
       Data,
       config
     );
