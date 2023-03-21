@@ -120,6 +120,7 @@ export const updateEmployee = (id, Data) => async (dispatch) => {
       Data,
       config
     );
+    
 
     dispatch({
       type: Types.UPDATE_EMPLOYEE_SUCCESS,
